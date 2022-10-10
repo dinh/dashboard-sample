@@ -1,0 +1,33 @@
+{% extends 'layouts/base-grid.html' %}
+
+{% block title %} Daily {% endblock title %}
+
+{% block stylesheets %}
+    <style>
+    </style>
+{% endblock stylesheets %}
+
+{% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
+
+{% block content %}
+    <div class="header">
+        <form autocomplete="off">
+            <input type="hidden" name="symbol" value="{{ symbol }}">
+            {% for button in button_labels %}
+                <div class="trigger-button"
+                     hx-post="/daily/chart"
+                     hx-trigger="click"
+                     hx-target="#daily-chart"
+                     hx-vals='{"window": "{{ button }}"}'
+                     id="{{ button }}">{{ button }}
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+    <div id="daily-chart">
+        {{ fig | safe }}
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}

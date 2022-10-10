@@ -1,0 +1,84 @@
+/* styling for the whole dashboard list container, including the sidebars on the side */
+.dashboard-list-container {
+    display: grid;
+    grid-template-rows: 55px calc(100vh - 55px);
+    grid-template-columns: 220px auto;
+    /*grid-gap: 10px;*/
+    grid-template-areas:
+    'sidebar header'
+    'sidebar dashboards';
+}
+
+/* styling for just the main list of dashboards displayed on screen */
+.dashboard-list-header {
+    height: 100%;
+    background-color: #3f4550;
+    /*background-color: #202733;*/
+    /*border-left: 2px solid black;*/
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    grid-area: header;
+    padding-left: 10px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+
+.dashboards-container {
+    padding: 10px 10px 10px 10px;
+
+    grid-area: dashboards;
+    overflow: auto;
+}
+
+.dashboard-list-dashboard-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+/* styling for the sidebars */
+.sidebar-wrapper {
+    /*background-color: #202733;*/
+    background-color: #3f4550;
+    grid-area: sidebar;
+    height: 100vh;
+}
+
+.sidebar-title {
+    height: 22px;
+    font-weight: 600;
+    color: white;
+    padding-left: 5px;
+}
+
+.sidebar-data {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-top: 2px solid #012025;
+}
+
+.sidebar-item {
+    margin: 8px 16px;
+}
+
+.sidebar-checkbox {
+    margin-left: 10px;
+}
+
+.search-box {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 20%;
+}
+
+.v-2 {
+    display: grid;
+    grid-template-rows: var(--grid-row-specs, 50% 1fr);
+    height: 100%;
+    width: 100%;
+    grid-gap: 10px;
+}

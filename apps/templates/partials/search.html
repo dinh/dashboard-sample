@@ -1,0 +1,22 @@
+<style>
+
+</style>
+{% if search_results %}
+    <form>
+        <ul class="select2-results__options select2-results__options--nested" id="manager-search-results">
+            {% for children in search_results %}
+                <div class="select2-results__option" role="treeitem"
+                     aria-selected="false" data-select2-id="{{ children['1. symbol'] }}">
+                    <div id="{{ children['1. symbol'] }}"
+                         style="color: black">
+                        <a href="{{ url_for('daily', symbol=children['1. symbol']) }}" class="search-link">
+                            <b>Symbol</b>: {{ children['1. symbol'] }}
+                        </a>
+                        <br>
+                        <sup> <b>Name</b>: {{ children['2. name'] }} </sup>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </form>
+{% endif %}

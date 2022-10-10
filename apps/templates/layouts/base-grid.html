@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+
+    <link id="pagestyle" href="{{ config.ASSETS_ROOT }}/css/forms.css" rel="stylesheet"/>
+    <link id="pagestyle" href="{{ config.ASSETS_ROOT }}/css/grid.css" rel="stylesheet"/>
+
+    <!-- Specific CSS goes here -->
+    {% block stylesheets %}{% endblock stylesheets %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .active-link {
+        {#background-color: #EDEFF2;#}
+            color: black;
+        }
+    </style>
+</head>
+<body style="margin: 0">
+
+<div class="dashboard-list-container">
+    <section class="sidebar-wrapper">
+        <p class="sidebar-title">StockSense</p>
+        <div class="sidebar-data">
+            <span style="color: white; padding-top: 10px; padding-left: 10px">
+                <a class="{% if 'today' in segment %} active-link {% endif %}"
+                   href="{{ url_for('todays_markets') }}"> Today's Market </a>
+            </span>
+        </div>
+    </section>
+    <div class="dashboard-list-header">
+        <div class="search-box">
+            <input style="height: 100%"
+                   autocomplete="off"
+                   type="text"
+                   name="q"
+                   hx-get="/search"
+                   hx-trigger="keyup delay:500ms changed"
+                   hx-target="#search-results"
+                   placeholder="Search for name or ticker"
+            >
+            <div style="z-index: 1; position: relative; background-color: white; border: 1px solid black"
+                 id="search-results">
+            </div>
+        </div>
+    </div>
+    <section class="dashboards-container">
+        {% block content %}{% endblock content %}
+    </section>
+</div>
+
+<!-- Core JS Files -->
+{% include "includes/scripts.html" %}
+
+<!-- Specific JS goes here -->
+{% block javascripts %}{% endblock javascripts %}
+
+</body>
+</html>
