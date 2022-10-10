@@ -17,8 +17,8 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         .active-link {
-        {#background-color: #EDEFF2;#}
             color: black;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -28,8 +28,8 @@
     <section class="sidebar-wrapper">
         <p class="sidebar-title">StockSense</p>
         <div class="sidebar-data">
-            <span style="color: white; padding-top: 10px; padding-left: 10px">
-                <a class="{% if 'today' in segment %} active-link {% endif %}"
+            <span class="sidebar-item{% if 'today' in segment %} active{% endif %}">
+                <a class="tdnone {% if 'today' in segment %} active-link {% endif %}"
                    href="{{ url_for('todays_markets') }}"> Today's Market </a>
             </span>
         </div>
