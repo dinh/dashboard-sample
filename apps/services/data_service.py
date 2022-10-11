@@ -28,7 +28,7 @@ class DataSvc:
     def get_daily_stock_series(self, symbol):
         s3_key = self.urls.get_daily_stock_series_url_s3(symbol)
         if self.s3.does_object_exist(s3_key):
-            today = pd.Timestamp.today().date()
+            today = pd.Timestamp.utcnow().date()
             last_modified = self.get_last_modified(s3_key)
             if today == last_modified:
                 logger.info(f"loading from s3: {s3_key}")
@@ -55,7 +55,7 @@ class DataSvc:
     def get_market_stock_series(self):
         s3_key = self.urls.get_market_stock_url_s3()
         if self.s3.does_object_exist(s3_key):
-            today = pd.Timestamp.today().date()
+            today = pd.Timestamp.utcnow().date()
             last_modified = self.get_last_modified(s3_key)
             if today == last_modified:
                 logger.info(f"loading from s3: {s3_key}")

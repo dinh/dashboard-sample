@@ -61,6 +61,13 @@
     display: none;
 }
 
+.active {
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #0e6498;
+    background-color: white;
+}
+
 .search-link {
     outline: none;
     text-decoration: none;
@@ -80,4 +87,9 @@
 .search-link:hover {
     border-bottom: 1px solid;
     background: #ced3d7;
+}
+
+.search-link:visited {
+    text-decoration: none;
+    color: #93a7ab;
 }

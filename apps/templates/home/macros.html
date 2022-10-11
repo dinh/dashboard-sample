@@ -1,0 +1,14 @@
+{% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
+
+{% macro build_header(endpoint, target) %}
+    {% for button in button_labels %}
+        <div class="trigger-button"
+             hx-post="{{ endpoint }}"
+             hx-trigger="click"
+             hx-indicator="#indicator"
+             hx-target="{{ target }}"
+             hx-vals='{"window": "{{ button }}"}'
+             id="{{ button }}">{{ button }}
+        </div>
+    {% endfor %}
+{% endmacro %}

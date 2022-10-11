@@ -1,34 +1,17 @@
 import flask
 import pandas as pd
 import requests
-from flask import render_template, request
+from flask import render_template, redirect, url_for
 from jinja2 import TemplateNotFound
 
 from apps import app
 from .views.market import MarketView
 
 
-def get_segment(request):
+@app.route('/')
+def index():
     try:
-
-        segment = request.path.split('/')[-1]
-
-        if segment == '':
-            segment = 'index'
-
-        return segment
-
-    except:
-        return None
-
-
-@app.route('/', defaults={'path': 'index.html'})
-@app.route('/<path>')
-def index(path):
-    try:
-
-        segment = get_segment(request)
-        return render_template('home/' + path, segment=segment)
+        return redirect(url_for('todays_markets'))
 
     except TemplateNotFound:
         return render_template('home/page-404.html'), 404
@@ -36,14 +19,13 @@ def index(path):
 
 @app.route('/todays_markets', methods=['GET', 'POST'])
 def todays_markets():
-    segment = get_segment(request)
     view = MarketView()
     if view.is_htmx_request:
         html = view.get_daily_market_chart_html()
         resp = flask.make_response(html)
         return resp
     return render_template("home/todays-market-grid.html",
-                           segment=segment)
+                           segment=view.segment)
 
 
 @app.route('/search', methods=['GET', 'POST'])

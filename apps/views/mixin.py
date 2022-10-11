@@ -17,6 +17,20 @@ class _ViewMixin:
         self.data_service = DataSvc()
 
     @property
+    def segment(self):
+        try:
+
+            segment = self.request.path.split('/')[-1]
+
+            if segment == '':
+                segment = 'index'
+
+            return segment
+
+        except:
+            return None
+
+    @property
     def window(self):
         return self.request.form.get('window')
 

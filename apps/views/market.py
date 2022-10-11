@@ -1,7 +1,7 @@
 import pandas as pd
 
 from apps.services.data_service import DataSvc
-from ._mixin import _ViewMixin
+from .mixin import _ViewMixin
 from .helpers import plot_prices, _write_html, color_picker
 
 

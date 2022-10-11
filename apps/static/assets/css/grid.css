@@ -77,6 +77,8 @@
 
 .tdnone {
     text-decoration: none;
+    color: lightgray;
+    font-weight: 600;
 }
 
 .sidebar-item {

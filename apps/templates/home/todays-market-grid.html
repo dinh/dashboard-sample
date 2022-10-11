@@ -1,4 +1,8 @@
 {% extends 'layouts/base-grid.html' %}
+{% import 'home/macros.html' as macros %}
+
+{% block title %} Today's Markets {% endblock title %}
+
 {% block stylesheets %}
     <style>
 
@@ -7,44 +11,18 @@
             --grid-gap-specs: 0px;
         }
 
-
-        .htmx-indicator {
-            opacity: 0;
-            transition: opacity 500ms ease-in;
-            width: 100px;
-            height: 100px;
-        }
-
-        .htmx-request .htmx-indicator {
-            opacity: 1
-        }
-
-        .htmx-request.htmx-indicator {
-            opacity: 1
-        }
     </style>
 {% endblock stylesheets %}
-
-{% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
 
 {% block content %}
     <div class="v-2">
         <div class="header">
             <form autocomplete="off">
-                {% for button in button_labels %}
-                    <div class="trigger-button"
-                         hx-indicator="#indicator"
-                         hx-post="/todays_markets"
-                         hx-trigger="click"
-                         hx-target="#market-chart"
-                         hx-vals='{"window": "{{ button }}"}'
-                         id="{{ button }}">{{ button }}
-                    </div>
-                {% endfor %}
+                {{ macros.build_header(endpoint="/todays_markets", target="#market-chart") }}
             </form>
+            <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>
         </div>
         <div id="market-chart">
-            <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>
             <div
                     hx-indicator="#indicator"
                     hx-post="/todays_markets"
@@ -59,6 +37,5 @@
 
 {% block javascripts %}
     <script>
-
     </script>
 {% endblock %}

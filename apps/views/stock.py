@@ -1,5 +1,5 @@
 from apps.views.helpers import _write_html, plot_prices, color_picker
-from ._mixin import _ViewMixin
+from .mixin import _ViewMixin
 
 
 class StockView(_ViewMixin):
