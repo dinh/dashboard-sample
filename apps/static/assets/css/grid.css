@@ -2,12 +2,20 @@
 .dashboard-list-container {
     display: grid;
     grid-template-rows: 55px calc(100vh - 55px);
-    grid-template-columns: 220px auto;
+    grid-template-columns: 10vw auto;
     /*grid-gap: 10px;*/
     grid-template-areas:
     'sidebar header'
     'sidebar dashboards';
 }
+
+@media screen
+and (max-width: 1024px) {
+    .dashboard-list-container {
+        grid-template-columns: 0;
+    }
+}
+
 
 /* styling for just the main list of dashboards displayed on screen */
 .dashboard-list-header {
@@ -59,12 +67,25 @@
     flex-wrap: wrap;
 }
 
+@media screen
+and (max-width: 1024px) {
+    .sidebar-data {
+        display: none;
+    }
+}
 
 .search-box {
     display: flex;
     flex-direction: column;
     height: 50%;
     width: 20%;
+}
+
+@media screen
+and (max-width: 1024px) {
+    .search-box {
+        width: 50%;
+    }
 }
 
 .v-2 {
