@@ -52,16 +52,20 @@ class DataSvc:
         self.s3.to_parquet(df, s3_key, index=True)
         return df
 
-    def get_market_stock_series(self):
+    def get_market_stock_series(self, columns=None):
+        if columns is None:
+            columns = ['asof', 'symbol', 'close']
         s3_key = self.urls.get_market_stock_url_s3()
         if self.s3.does_object_exist(s3_key):
             today = pd.Timestamp.utcnow().date()
             last_modified = self.get_last_modified(s3_key)
             if today == last_modified:
                 logger.info(f"loading from s3: {s3_key}")
-                df = self.s3.read_parquet(s3_key, columns=['asof', 'symbol', 'close'])
+                df = self.s3.read_parquet(s3_key, columns=columns)
                 return df
             else:
-                return self.get_market_data_from_api()
+                df = self.get_market_data_from_api()
+                return df.loc[:, columns]
         else:
-            return self.get_market_data_from_api()
+            df = self.get_market_data_from_api()
+            return df.loc[:, columns]

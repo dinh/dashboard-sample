@@ -1,6 +1,5 @@
 import flask
 from flask import render_template, redirect, url_for
-from jinja2 import TemplateNotFound
 
 from apps import application
 from .views.market import MarketView
@@ -10,11 +9,7 @@ from .views.stock import StockView
 
 @application.route('/')
 def index():
-    try:
-        return redirect(url_for('todays_markets'))
-
-    except TemplateNotFound:
-        return render_template('home/page-404.html'), 404
+    return redirect(url_for('todays_markets'))
 
 
 @application.route('/todays_markets', methods=['GET', 'POST'])

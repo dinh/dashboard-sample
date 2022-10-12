@@ -15,9 +15,9 @@ class MarketView(_ViewMixin):
     def __init__(self):
         super().__init__()
 
-    def get_market_data(self):
+    def get_market_data(self, column='close'):
         df = self.data_service.get_market_stock_series()
-        df = pd.concat([df.loc[df.symbol == symbol, ['close']] for symbol in self.data_service.urls.DEFAULT_INDICES],
+        df = pd.concat([df.loc[df.symbol == symbol, [column]] for symbol in self.data_service.urls.DEFAULT_INDICES],
                        axis=1)
         df.columns = self.data_service.urls.DEFAULT_INDICES
         return df.dropna()
@@ -36,7 +36,7 @@ class MarketView(_ViewMixin):
             df = df.loc[df.index >= start_date, :]
         df = calc_cum_returns(df)
         df = self._prepare_for_plot(df)
-        fig = plot_prices(df, "Today's Market")
+        fig = plot_prices(df, "Today's Market").update_layout(yaxis_tickformat='%')
         return fig
 
     def get_daily_market_chart_html(self, div_id='market-chart'):

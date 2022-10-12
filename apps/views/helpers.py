@@ -19,7 +19,7 @@ def _write_html(fig, div_id=None):
 def plot_prices(df, title):
     fig = px.line(df)
     fig.update_xaxes(title=None, showgrid=True)
-    fig.update_yaxes(ticksuffix=None, showgrid=True)
+    fig.update_yaxes(title=None, ticksuffix=None, showgrid=True)
     fig.update_traces(hovertemplate=None)
     fig.update_layout(template='simple_white',
                       hovermode='x unified', hoverlabel_namelength=-1, autosize=True,
