@@ -1,3 +1,4 @@
+from apps.services import window
 from apps.views.helpers import _write_html, plot_prices, color_picker
 from .mixin import _ViewMixin
 
@@ -25,7 +26,7 @@ class StockView(_ViewMixin):
     def build_daily_stock_chart(self):
         df = self.data_service.get_daily_stock_series(self.symbol)
         if self.window:
-            start_date = self.get_start_date(df.index.max())
+            start_date = window.get_start_date(df.index.max(), self.window)
             df = df.loc[df.index >= start_date, :]
         df = df.loc[:, ['close']]
         df = self._prepare_for_plot(df)

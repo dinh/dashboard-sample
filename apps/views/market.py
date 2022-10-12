@@ -1,15 +1,19 @@
 import pandas as pd
 
-from apps.services.data_service import DataSvc
-from .mixin import _ViewMixin
+from apps.services import window
 from .helpers import plot_prices, _write_html, color_picker
+from .mixin import _ViewMixin
+
+
+def calc_cum_returns(df):
+    df = (1 + df.pct_change()).cumprod() - 1
+    return df.fillna(0)
 
 
 class MarketView(_ViewMixin):
 
     def __init__(self):
         super().__init__()
-        self.data_service = DataSvc()
 
     def get_market_data(self):
         df = self.data_service.get_market_stock_series()
@@ -28,10 +32,9 @@ class MarketView(_ViewMixin):
     def build_market_chart(self):
         df = self.get_market_data()
         if self.window:
-            start_date = self.get_start_date(df.index.max())
+            start_date = window.get_start_date(df.index.max(), self.window)
             df = df.loc[df.index >= start_date, :]
-        df = (1 + df.pct_change()).cumprod() - 1
-        df = df.fillna(0)
+        df = calc_cum_returns(df)
         df = self._prepare_for_plot(df)
         fig = plot_prices(df, "Today's Market")
         return fig

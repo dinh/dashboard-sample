@@ -33,6 +33,15 @@
                    href="{{ url_for('todays_markets') }}"> Today's Market </a>
             </span>
         </div>
+        {% if 'daily' in segment %}
+            <p class="sidebar-title">Security Analysis</p>
+            <div class="sidebar-data">
+            <span class="sidebar-item{% if 'daily' in segment %} active{% endif %}">
+                <a style="padding-left: 5px" class="tdnone {% if 'daily' in segment %} active-link {% endif %}"
+                   href="{{ url_for('daily', symbol=symbol) }}"> {{ symbol }} </a>
+            </span>
+            </div>
+        {% endif %}
     </section>
     <div class="dashboard-list-header">
         <div class="search-box">
