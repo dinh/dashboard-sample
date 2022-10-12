@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 
@@ -5,6 +6,8 @@ import pandas as pd
 import requests
 
 from .urls import StockURLs
+
+logger = logging.getLogger(__name__)
 
 
 class AlphaVantage:
@@ -19,8 +22,10 @@ class AlphaVantage:
 
     @staticmethod
     def _get_response(url):
-        data = requests.get(url)
-        data = data.json()
+        response = requests.get(url)
+        data = response.json()
+        if 'Error Message' in data.keys():
+            logger.info(data)
         ts_data = data.get(list(data.keys())[1])
         ts_data = {pd.to_datetime(k): {k: float(v)
                                        for k, v in ts_data[k].items()} for k, v in ts_data.items()}
