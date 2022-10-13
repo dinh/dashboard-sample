@@ -1,8 +1,8 @@
 {% if search_results %}
     <form>
-        <ul class="" id="search-result-list">
+        <ul class="search-results" id="search-result-list">
             {% for children in search_results %}
-                <div class="" role="treeitem"
+                <div role="treeitem"
                      aria-selected="false" data-select2-id="{{ children['1. symbol'] }}">
                     <div id="{{ children['1. symbol'] }}"
                          style="color: black">
@@ -11,6 +11,7 @@
                         </a>
                         <br>
                         <sup> <b>Name</b>: {{ children['2. name'] }} </sup>
+                        <hr>
                     </div>
                 </div>
             {% endfor %}

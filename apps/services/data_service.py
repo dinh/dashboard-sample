@@ -28,6 +28,7 @@ class DataSvc:
     def get_daily_stock_series(self, symbol):
         s3_key = self.urls.get_daily_stock_series_url_s3(symbol)
         if self.s3.does_object_exist(s3_key):
+            # Timezone really should be a system setting, but leaving here
             today = pd.Timestamp.utcnow().date()
             last_modified = self.get_last_modified(s3_key)
             if today == last_modified:
