@@ -20,7 +20,7 @@ class DataSvc:
 
     def get_daily_stock_data_from_api(self, path, symbol):
         logger.info(f"loading from api: {symbol}")
-        df, meta = self.av.get_daily_stock_series(symbol, output='full')
+        df, meta = self.av.get_daily_stock_series(symbol, outputsize='full')
         df['symbol'] = symbol
         self.s3.to_parquet(df, path, index=True)
         return df, meta
@@ -45,7 +45,7 @@ class DataSvc:
         s3_key = self.urls.get_market_stock_url_s3()
         dfs = []
         for symbol in self.urls.DEFAULT_INDICES:
-            df, meta = self.av.get_daily_stock_series(symbol, output='full')
+            df, meta = self.av.get_daily_stock_series(symbol, outputsize='full')
             df['symbol'] = symbol
             dfs.append(df)
         df = pd.concat(dfs)

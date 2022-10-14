@@ -11,9 +11,8 @@ def endpoint_builder(function_param=None):
             url = func(*args, **kwargs)
             kwargs['function'] = function_param
             kwargs['apikey'] = args[0].api_key
-            for value, arg in zip(args, inspect.getfullargspec(func).args):
-                if arg != 'self':
-                    kwargs[arg] = value
+            for value, arg in zip(args[1:], inspect.getfullargspec(func).args[1:]):
+                kwargs[arg] = value
             return url + urlencode(kwargs)
 
         return wrapper
@@ -31,11 +30,11 @@ class StockURLs:
         self._bucket_url = "s3://{bucket}/{function}/{symbol}"
 
     @endpoint_builder(function_param='TIME_SERIES_DAILY')
-    def get_daily_stock_series_url(self, symbol, output='compact'):
+    def get_daily_stock_series_url(self, symbol, **kwargs):
         return self._base_api_url
 
     @endpoint_builder(function_param='TIME_SERIES_DAILY_ADJUSTED')
-    def get_daily_adjusted_stock_series_url(self, symbol, output='compact'):
+    def get_daily_adjusted_stock_series_url(self, symbol, **kwargs):
         return self._base_api_url
 
     @endpoint_builder(function_param='SYMBOL_SEARCH')
@@ -43,7 +42,7 @@ class StockURLs:
         return self._base_api_url
 
     @endpoint_builder(function_param='NEWS_SENTIMENT')
-    def get_news_url(self, tickers):
+    def get_news_url(self, tickers, **kwargs):
         return self._base_api_url
 
     def get_daily_stock_series_url_s3(self, symbol):

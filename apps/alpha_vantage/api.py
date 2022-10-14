@@ -36,6 +36,6 @@ class AlphaVantage:
         meta_data = data.get(list(data.keys())[0])
         return ts_data, meta_data
 
-    def get_daily_stock_series(self, symbol, output="compact"):
-        url = self.urls.get_daily_stock_series_url(symbol=symbol, output=output)
+    def get_daily_stock_series(self, symbol, outputsize="full"):
+        url = self.urls.get_daily_stock_series_url(symbol=symbol, outputsize=outputsize)
         return AlphaVantage._get_response(url)
