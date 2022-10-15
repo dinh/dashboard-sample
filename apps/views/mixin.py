@@ -20,4 +20,5 @@ class _ViewMixin:
 
     @property
     def window(self):
-        return self.request.form.get('window')
+        # Just going to force lookback to be max 10 years since unadjusted data
+        return self.request.form.get('window', '10Y')

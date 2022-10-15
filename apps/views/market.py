@@ -14,15 +14,12 @@ class MarketView(_ViewMixin):
 
     @lru_cache(500)
     def get_market_data(self, column='close'):
-        # Force max lookback to be 10Y
-        lb = self.window if self.window else '10Y'
-
         df = self.data_service.get_market_stock_series()
         df = pd.concat([df.loc[df.symbol == symbol, [column]] for symbol in self.data_service.urls.DEFAULT_INDICES],
                        axis=1)
         df.columns = self.data_service.urls.DEFAULT_INDICES
         df = df.dropna()
-        start_date = window.get_start_date(df.index.max(), lb)
+        start_date = window.get_start_date(df.index.max(), self.window)
         df = df.loc[df.index >= start_date, :]
         return df
 
