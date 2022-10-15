@@ -88,6 +88,21 @@ and (max-width: 1024px) {
     }
 }
 
+.v-2-2 {
+    display: grid;
+    grid-template-rows: 50% 1fr;
+    height: 100%;
+    width: 100%;
+    grid-gap: 5px;
+}
+
+@media screen
+and (max-width: 1024px) {
+    .v-2-2 {
+        display: block;
+    }
+}
+
 .v-2 {
     display: grid;
     grid-template-rows: var(--grid-row-specs, 50% 1fr);

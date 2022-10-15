@@ -1,13 +1,10 @@
+from functools import lru_cache
+
 import pandas as pd
 
-from apps.services import window
+from apps.services import stats, window
 from .helpers import plot_prices, _write_html, color_picker
 from .mixin import _ViewMixin
-
-
-def calc_cum_returns(df):
-    df = (1 + df.pct_change()).cumprod() - 1
-    return df.fillna(0)
 
 
 class MarketView(_ViewMixin):
@@ -15,12 +12,19 @@ class MarketView(_ViewMixin):
     def __init__(self):
         super().__init__()
 
+    @lru_cache(500)
     def get_market_data(self, column='close'):
+        # Force max lookback to be 10Y
+        lb = self.window if self.window else '10Y'
+
         df = self.data_service.get_market_stock_series()
         df = pd.concat([df.loc[df.symbol == symbol, [column]] for symbol in self.data_service.urls.DEFAULT_INDICES],
                        axis=1)
         df.columns = self.data_service.urls.DEFAULT_INDICES
-        return df.dropna()
+        df = df.dropna()
+        start_date = window.get_start_date(df.index.max(), lb)
+        df = df.loc[df.index >= start_date, :]
+        return df
 
     @staticmethod
     def _prepare_for_plot(df):
@@ -31,14 +35,23 @@ class MarketView(_ViewMixin):
 
     def build_market_chart(self):
         df = self.get_market_data()
-        if self.window:
-            start_date = window.get_start_date(df.index.max(), self.window)
-            df = df.loc[df.index >= start_date, :]
-        df = calc_cum_returns(df)
+        df = stats.calc_cum_returns(df)
         df = self._prepare_for_plot(df)
         fig = plot_prices(df, "Today's Market").update_layout(yaxis_tickformat='%')
         return fig
 
     def get_daily_market_chart_html(self, div_id='market-chart'):
         fig = self.build_market_chart()
+        return _write_html(fig, div_id=div_id)
+
+    def build_drawdown_chart(self):
+        df = self.get_market_data()
+        df = stats.calc_cum_returns(df)
+        df = stats.calc_drawdown(df)
+        df = self._prepare_for_plot(df)
+        fig = plot_prices(df, "Drawdown").update_layout(yaxis_tickformat='%')
+        return fig
+
+    def get_drawdown_chart_html(self, div_id='market-drawdown'):
+        fig = self.build_drawdown_chart()
         return _write_html(fig, div_id=div_id)

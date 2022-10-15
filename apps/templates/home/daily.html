@@ -17,7 +17,7 @@
         <div class="header">
             <form autocomplete="off">
                 <input type="hidden" name="symbol" value="{{ symbol }}">
-                {{ macros.build_header(endpoint="/daily/chart", target="#daily-chart") }}
+                {{ macros.build_header(endpoint="/chart/daily", target="#daily-chart") }}
             </form>
             <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>
         </div>

@@ -2,13 +2,13 @@ import flask
 import pandas as pd
 import requests
 
-from apps.alpha_vantage.urls import StockURLs
+from apps.alpha_vantage.urls import AlphaVantageUrls
 
 
 class SearchBuilder:
     def __init__(self):
         self.request = flask.request
-        self.urls = StockURLs()
+        self.urls = AlphaVantageUrls()
 
     @property
     def search_string(self):

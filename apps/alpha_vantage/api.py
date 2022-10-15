@@ -5,7 +5,7 @@ import re
 import pandas as pd
 import requests
 
-from .urls import StockURLs
+from .urls import AlphaVantageUrls
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +14,7 @@ class AlphaVantage:
 
     def __init__(self, key=None, bucket=None):
         self.api_key = key if key else os.getenv('STOCK_API_KEY')
-        self.urls = StockURLs(key=key, bucket=bucket)
+        self.urls = AlphaVantageUrls(key=key, bucket=bucket)
 
     @staticmethod
     def rename_cols(df):

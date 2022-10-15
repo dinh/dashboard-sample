@@ -20,7 +20,7 @@ def endpoint_builder(function_param=None):
     return _endpoint_url
 
 
-class StockURLs:
+class AlphaVantageUrls:
     DEFAULT_INDICES = ['QQQ', 'SPY', 'IWM']
 
     def __init__(self, key=None, bucket=None):
@@ -51,4 +51,4 @@ class StockURLs:
 
     def get_market_stock_url_s3(self):
         _FUNCTION = 'TIME_SERIES_DAILY'
-        return self._bucket_url.format(bucket=self.bucket, function=_FUNCTION, symbol='MARKET_DATA')
+        return self.get_daily_stock_series_url_s3(symbol='MARKET_DATA')

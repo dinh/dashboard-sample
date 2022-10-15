@@ -4,7 +4,6 @@ import awswrangler as wr
 import pandas as pd
 
 from apps.alpha_vantage.api import AlphaVantage
-from apps.alpha_vantage.urls import StockURLs
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +12,10 @@ class DataSvc:
     def __init__(self):
         self.s3 = wr.s3
         self.av = AlphaVantage()
-        self.urls = StockURLs()
+
+    @property
+    def urls(self):
+        return self.av.urls
 
     def get_last_modified(self, path):
         return self.s3.describe_objects(path).get(path).get('LastModified').date()
@@ -45,7 +47,7 @@ class DataSvc:
         s3_key = self.urls.get_market_stock_url_s3()
         dfs = []
         for symbol in self.urls.DEFAULT_INDICES:
-            df, meta = self.av.get_daily_stock_series(symbol, outputsize='full')
+            df, meta = self.urls.get_daily_stock_series(symbol, outputsize='full')
             df['symbol'] = symbol
             dfs.append(df)
         df = pd.concat(dfs)
