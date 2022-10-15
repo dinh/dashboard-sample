@@ -12,6 +12,10 @@ class MarketView(_ViewMixin):
     def __init__(self):
         super().__init__()
 
+    @property
+    def av(self):
+        return self.data_service.av
+
     @lru_cache(500)
     def get_market_data(self, column='close'):
         df = self.data_service.get_market_stock_series()

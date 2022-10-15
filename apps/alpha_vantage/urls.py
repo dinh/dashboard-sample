@@ -42,7 +42,7 @@ class AlphaVantageUrls:
         return self._base_api_url
 
     @endpoint_builder(function_param='NEWS_SENTIMENT')
-    def get_news_url(self, tickers, **kwargs):
+    def get_news_url(self, **kwargs):
         return self._base_api_url
 
     def get_daily_stock_series_url_s3(self, symbol):

@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for
 
 from apps import application
 from .views.market import MarketView
+from .views.news import NewsView
 from .views.search import SearchBuilder
 from .views.stock import StockView
 
@@ -51,3 +52,10 @@ def daily():
     view = StockView()
     return render_template("home/daily.html", fig=view.get_daily_stock_chart_html(), symbol=view.symbol,
                            segment=view.segment)
+
+
+@application.route('/news')
+def news():
+    view = NewsView()
+    newsfeed = view.get_news_feed()
+    return render_template("home/news.html", news=newsfeed.iloc[:10])

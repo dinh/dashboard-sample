@@ -13,16 +13,32 @@
 {% endblock stylesheets %}
 
 {% block content %}
-    <div class="v-2">
-        <div class="header">
-            <form autocomplete="off">
-                <input type="hidden" name="symbol" value="{{ symbol }}">
-                {{ macros.build_header(endpoint="/chart/daily", target="#daily-chart") }}
-            </form>
-            <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>
+    <div class="v-2-2">
+        <div class="v-2">
+            <div class="header">
+                <form autocomplete="off">
+                    <input type="hidden" name="symbol" value="{{ symbol }}">
+                    {{ macros.build_header(endpoint="/chart/daily", target="#daily-chart") }}
+                </form>
+                <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>
+            </div>
+            <div id="daily-chart">
+                {{ fig | safe }}
+            </div>
         </div>
-        <div id="daily-chart">
-            {{ fig | safe }}
+        <div class="v-2">
+            <div class="header">
+                <div style="font-weight: bold; padding-left: 10px">
+                    News Feed
+                </div>
+            </div>
+            <div id="news-feed-body">
+                <div hx-get="/news"
+                     hx-trigger="load every 300s"
+                     hx-vals='{"tickers": "{{ symbol }}"}'
+                >
+                </div>
+            </div>
         </div>
     </div>
 {% endblock content %}

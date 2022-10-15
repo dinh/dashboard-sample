@@ -39,3 +39,9 @@ class AlphaVantage:
     def get_daily_stock_series(self, symbol, outputsize="full"):
         url = self.urls.get_daily_stock_series_url(symbol=symbol, outputsize=outputsize)
         return AlphaVantage._get_response(url)
+
+    def get_news_feed(self, **kwargs):
+        url = self.urls.get_news_url(**kwargs)
+        response = requests.get(url)
+        data = response.json()
+        return pd.DataFrame(data["feed"])

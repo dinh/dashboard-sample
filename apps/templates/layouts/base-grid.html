@@ -11,12 +11,14 @@
 
     <link id="pagestyle" href="{{ config.ASSETS_ROOT }}/css/forms.css" rel="stylesheet"/>
     <link id="pagestyle" href="{{ config.ASSETS_ROOT }}/css/grid.css" rel="stylesheet"/>
+    <link href="https://unpkg.com/tabulator-tables@5.4.1/dist/css/tabulator.min.css" rel="stylesheet">
+
 
     <!-- Specific CSS goes here -->
     {% block stylesheets %}{% endblock stylesheets %}
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
-    /* Putting a few custom styles here*/
+        /* Putting a few custom styles here*/
         .search-results {
             padding-inline-start: 20px;
             padding-inline-end: 20px;

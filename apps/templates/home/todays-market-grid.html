@@ -29,13 +29,15 @@
         </div>
         <div class="v-2">
             <div class="header">
-                <form autocomplete="off">
-                    {{ macros.build_header(endpoint="/chart/drawdown", target="#market-drawdown") }}
-                </form>
-                {#                <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>#}
+                <div style="font-weight: bold; padding-left: 10px">
+                    News Feed
+                </div>
             </div>
-            <div id="market-drawdown">
-                {{ fig_drawdown | safe }}
+            <div id="news-feed-body">
+                <div hx-get="/news"
+                     hx-trigger="load every 300s"
+                >
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,12 @@
+<div id="news-feed"></div>
+<script>
+    var tableData = {{ news.to_json(orient="records", date_format="iso", date_unit="s")  | safe }};
+    var table = new Tabulator("#news-feed", {
+        data: tableData,
+        layout: "fitColumns",
+        columns: [
+            {title: "Title", field: "title"},
+            {title: "Summary", field: "summary", hozAlign: "right"},
+        ],
+    });
+</script>

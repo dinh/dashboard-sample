@@ -92,7 +92,7 @@ and (max-width: 1024px) {
     display: grid;
     grid-template-rows: 50% 1fr;
     height: 100%;
-    width: 100%;
+    width: 98%;
     grid-gap: 5px;
 }
 
