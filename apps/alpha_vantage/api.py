@@ -44,4 +44,7 @@ class AlphaVantage:
         url = self.urls.get_news_url(**kwargs)
         response = requests.get(url)
         data = response.json()
-        return pd.DataFrame(data["feed"])
+        df = pd.DataFrame(data["feed"])
+        df['time_published'] = pd.to_datetime(df['time_published'])
+        df['time_published'] = df['time_published'].dt.strftime("%m/%d/%Y, %H:%M:%S")
+        return df
