@@ -6,11 +6,21 @@ color_picker = lambda ret: "red" if ret < 0 else "green"
 
 
 def _write_html(fig, div_id=None):
+    config = {"responsive": True, "scrollZoom": False,
+              "displaylogo": False,
+              "modeBarButtonsToRemove": ['pan2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
+                                         'sendDataToCloud', 'select2d', 'lasso2d',
+                                         'drawclosedpath',
+                                         'zoom2d', 'autoScale2d',
+                                         'toggleSpikelines', 'hoverCompareCartesian',
+                                         'hoverClosestCartesian']
+              }
     buffer = StringIO()
     fig.write_html(file=buffer,
                    include_plotlyjs="https://cdn.plot.ly/plotly-latest.min.js",
                    full_html=False,
-                   div_id=div_id)
+                   div_id=div_id,
+                   config=config)
     buffer.seek(0)
     html_str = buffer.read()
     return html_str
