@@ -89,11 +89,15 @@ and (max-width: 1024px) {
 }
 
 .v-2-2 {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    /*
     grid-template-rows: 50% 1fr;
     height: 100%;
     width: 98%;
     grid-gap: 5px;
+     */
 }
 
 @media screen
@@ -104,11 +108,12 @@ and (max-width: 1024px) {
 }
 
 .v-2 {
-    display: grid;
-    grid-template-rows: var(--grid-row-specs, 50% 1fr);
-    height: 100%;
-    width: 100%;
-    grid-gap: 10px;
+    display: flex;
+    /*grid-template-rows: var(--grid-row-specs, 50% 1fr);*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*grid-gap: 10px;*/
+    flex-direction: column;
 }
 
 .tdnone {

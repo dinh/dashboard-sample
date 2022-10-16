@@ -2,7 +2,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #e9eaec;
+    padding-bottom: 5px;
+    /*background-color: #e9eaec;*/
+    flex: 0 95%;
 }
 
 .trigger-button {
@@ -98,4 +100,9 @@
 .search-link:visited {
     text-decoration: none;
     color: #93a7ab;
+}
+
+.news-header {
+    font-weight: bold;
+    padding-left: 10px
 }

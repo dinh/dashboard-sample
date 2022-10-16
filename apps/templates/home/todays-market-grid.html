@@ -29,15 +29,13 @@
         </div>
         <div class="v-2">
             <div class="header">
-                <div style="font-weight: bold; padding-left: 10px">
+                <div class="news-header">
                     News Feed
                 </div>
             </div>
-            <div id="news-feed-body">
-                <div hx-get="/news"
-                     hx-trigger="load every 300s"
-                >
-                </div>
+            <div hx-get="/news"
+                 hx-trigger="load, every 300s"
+            >
             </div>
         </div>
     </div>
@@ -45,5 +43,10 @@
 
 {% block javascripts %}
     <script>
+        window.addEventListener('resize', function () {
+            console.log("Resize Event");
+            table.redraw(true);
+        });
+
     </script>
 {% endblock %}

@@ -47,7 +47,7 @@ class DataSvc:
         s3_key = self.urls.get_market_stock_url_s3()
         dfs = []
         for symbol in self.urls.DEFAULT_INDICES:
-            df, meta = self.urls.get_daily_stock_series(symbol, outputsize='full')
+            df, meta = self.av.get_daily_stock_series(symbol, outputsize='full')
             df['symbol'] = symbol
             dfs.append(df)
         df = pd.concat(dfs)
