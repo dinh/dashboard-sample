@@ -21,6 +21,12 @@ class AlphaVantage:
         return [re.sub(r'\d+.', '', name).strip(' ') for name in list(df)]
 
     @staticmethod
+    def format_time_pulished_field(df):
+        df['time_published'] = pd.to_datetime(df['time_published'])
+        df['time_published'] = df['time_published'].dt.strftime("%m/%d/%Y, %H:%M:%S")
+        return df
+
+    @staticmethod
     def _get_response(url):
         response = requests.get(url)
         data = response.json()
@@ -40,11 +46,14 @@ class AlphaVantage:
         url = self.urls.get_daily_stock_series_url(symbol=symbol, outputsize=outputsize)
         return AlphaVantage._get_response(url)
 
+    def get_daily_stock_series_adjusted(self, symbol, outputsize="full"):
+        url = self.urls.get_daily_adjusted_stock_series_url(symbol=symbol, outputsize=outputsize)
+        return AlphaVantage._get_response(url)
+
     def get_news_feed(self, **kwargs):
         url = self.urls.get_news_url(**kwargs)
         response = requests.get(url)
         data = response.json()
         df = pd.DataFrame(data["feed"])
-        df['time_published'] = pd.to_datetime(df['time_published'])
-        df['time_published'] = df['time_published'].dt.strftime("%m/%d/%Y, %H:%M:%S")
+        df = AlphaVantage.format_time_pulished_field(df)
         return df

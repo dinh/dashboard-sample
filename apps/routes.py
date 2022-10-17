@@ -58,4 +58,4 @@ def daily():
 def news():
     view = NewsView()
     newsfeed = view.get_news_feed()
-    return render_template("home/news.html", news=newsfeed.iloc[:10])
+    return render_template("partials/news.html", news=newsfeed.iloc[:10])
