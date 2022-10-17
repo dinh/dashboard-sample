@@ -21,6 +21,13 @@ def todays_markets():
                            segment=view.segment)
 
 
+@application.route('/daily')
+def daily():
+    view = StockView()
+    return render_template("home/daily.html", fig=view.get_daily_stock_chart_html(), symbol=view.symbol,
+                           segment=view.segment)
+
+
 @application.route('/chart/drawdown', methods=['GET', 'POST'])
 def chart_drawdown():
     view = MarketView()
@@ -33,23 +40,16 @@ def chart_cumreturns():
     return view.get_daily_market_chart_html()
 
 
-@application.route('/search', methods=['GET', 'POST'])
-def search():
-    sb = SearchBuilder()
-    return render_template('partials/search.html', search_results=sb.get_results())
-
-
 @application.route('/chart/daily', methods=['GET', 'POST'])
 def daily_chart():
     view = StockView()
     return view.get_daily_stock_chart_html()
 
 
-@application.route('/daily')
-def daily():
-    view = StockView()
-    return render_template("home/daily.html", fig=view.get_daily_stock_chart_html(), symbol=view.symbol,
-                           segment=view.segment)
+@application.route('/search', methods=['GET', 'POST'])
+def search():
+    sb = SearchBuilder()
+    return render_template('partials/search.html', search_results=sb.get_results())
 
 
 @application.route('/news')
