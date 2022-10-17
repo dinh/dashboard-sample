@@ -46,7 +46,6 @@ and (max-width: 1024px) {
 
 /* styling for the sidebars */
 .sidebar-wrapper {
-    /*background-color: #202733;*/
     background-color: #3f4550;
     grid-area: sidebar;
     height: 100vh;
