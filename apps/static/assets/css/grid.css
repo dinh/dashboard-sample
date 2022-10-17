@@ -21,8 +21,6 @@ and (max-width: 1024px) {
 .dashboard-list-header {
     height: 100%;
     background-color: #3f4550;
-    /*background-color: #202733;*/
-    /*border-left: 2px solid black;*/
     color: white;
     display: flex;
     align-items: center;
