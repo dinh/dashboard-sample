@@ -5,12 +5,6 @@
 
 {% block stylesheets %}
     <style>
-
-        body {
-            --grid-row-specs: max(4%, 35px) 1fr;
-            --grid-gap-specs: 0px;
-        }
-
     </style>
 {% endblock stylesheets %}
 
@@ -23,7 +17,7 @@
                 </form>
                 <img id="indicator" class="htmx-indicator" src="{{ config.ASSETS_ROOT }}/img/bars.svg"/>
             </div>
-            <div id="market-chart">
+            <div id="market-chart" class="container">
                 {{ fig_cumreturn | safe }}
             </div>
         </div>
@@ -44,9 +38,7 @@
 {% block javascripts %}
     <script>
         window.addEventListener('resize', function () {
-            console.log("Resize Event");
             table.redraw(true);
         });
-
     </script>
 {% endblock %}

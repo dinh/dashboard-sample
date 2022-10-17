@@ -16,9 +16,7 @@ def index():
 def todays_markets():
     view = MarketView()
     fig_cumreturn = view.get_daily_market_chart_html()
-    fig_drawdown = view.get_drawdown_chart_html()
     return render_template("home/todays-market-grid.html",
-                           fig_drawdown=fig_drawdown,
                            fig_cumreturn=fig_cumreturn,
                            segment=view.segment)
 

@@ -3,7 +3,6 @@
     display: grid;
     grid-template-rows: 55px calc(100vh - 55px);
     grid-template-columns: 10vw auto;
-    /*grid-gap: 10px;*/
     grid-template-areas:
     'sidebar header'
     'sidebar dashboards';
@@ -27,8 +26,8 @@ and (max-width: 1024px) {
     justify-content: space-between;
     grid-area: header;
     padding-left: 10px;
-    margin-block-start: 0em;
-    margin-block-end: 0em;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 .dashboards-container {
@@ -105,4 +104,9 @@ and (max-width: 1024px) {
 
 .sidebar-item.active {
     background-color: lightgray;
+}
+
+.container {
+    width: 100%;
+    height: 420px;
 }
