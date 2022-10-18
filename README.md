@@ -5,7 +5,11 @@ There is an amazing amount of interactivity that can be achieved on a website wi
 needing to use `javascript`. To demonstrate this idea, this repository runs the
 following site: [example site](http://dashboard.zmaytechstack.com/) with almost no `js`.
 The inspiration was to implement just a few of the features that are a part
-of [koyfin's](https://app.koyfin.com/) website.
+of [koyfin's](https://app.koyfin.com/) website without any `js`. And in doing so 
+show that you can get a lot of the same feel and functionality as a `REACT` site 
+or similar. I'll walk through a couple of the features but feel free to explore
+the code to get a better sense of what is going on. In the appendix, setup instructions
+are provided.
 
 The site has the following functionality:
 
@@ -31,16 +35,16 @@ generates the buttons along the top of the chart.
 {% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
 
 {% macro build_header(endpoint, target) %}
-{% for button in button_labels %}
-<div class="trigger-button"
-     hx-post="{{ endpoint }}"
-     hx-trigger="click"
-     hx-indicator="#indicator"
-     hx-target="{{ target }}"
-     hx-vals='{"window": "{{ button }}"}'
-     id="{{ button }}">{{ button }}
-</div>
-{% endfor %}
+    {% for button in button_labels %}
+        <div class="trigger-button"
+             hx-post="{{ endpoint }}"
+             hx-trigger="click"
+             hx-indicator="#indicator"
+             hx-target="{{ target }}"
+             hx-vals='{"window": "{{ button }}"}'
+             id="{{ button }}">{{ button }}
+        </div>
+    {% endfor %}
 {% endmacro %}
 ```
 
@@ -67,3 +71,5 @@ There are a few benefits to generate the html on the server side:
 
 ### Conclusion
 This is definitely not a bad approach if you're building a site and maintaining it yourself.
+
+### Setup
