@@ -11,6 +11,10 @@ or similar. I'll walk through a couple of the features but feel free to explore
 the code to get a better sense of what is going on. In the appendix, setup instructions
 are provided.
 
+**Full Disclosure:** *I am using the [Alpha Vantage](https://www.alphavantage.co/) free API 
+and only have 5 API hits per minute, so the site does not scale well! I do my best to cache
+results in S3, but only so much can be done.*
+
 The site has the following functionality:
 
 1. Updating the chart based on timeframe selection.
