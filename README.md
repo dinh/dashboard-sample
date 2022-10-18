@@ -25,12 +25,12 @@ All can be seen on the homepage:
 
 ![Homepage](.images/homepage.jpg)
 
-None of these features uses `javascript` (although the table does rely on the `javascript` package Tabulator). 
+None of these features use `javascript` (although the table does rely on the `javascript` package Tabulator). 
 To allow for the response nature of the site, we use on an interesting package called
-[htmx](https://htmx.org/) and instead of sending json between the server and the browser,
-you send html.
+[htmx](https://htmx.org/) that is gaining in popularity rather quickly. Instead of sending json 
+between the server and the browser, you send html.
 
-### Example
+### An Example
 They way the site uses this package can be shown with the cumulative return chart.
 The following [code](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/macros.html)
 generates the buttons along the top of the chart.
@@ -62,9 +62,10 @@ def chart_cumreturns():
     return view.get_daily_market_chart_html()
 ```
 
-which generates html to replace the plot on the screen with an updated version. And just like that, with no `js`,
-we can generate a chart with similar functionality to that on
-[https://app.koyfin.com/](koyfin).
+which uses [Plotly](https://plotly.com/python/) to build charts in `Python` 
+and generate  html to replace the plot on the screen with an updated version. 
+Just like that, with no `js`, we can generate a chart with similar functionality 
+to that on [https://app.koyfin.com/](koyfin).
 
 ![Koyfin](.images/koyfin.jpg)
 
@@ -72,6 +73,7 @@ we can generate a chart with similar functionality to that on
 There are a few benefits to generate the html on the server side:
 1. Language consistency: Stay in the same language as the backend code (e.g., `Python` for this example)
 2. Rapid prototyping: Easier to get a bunch of visuals - think dashboards - up in less time
+3. **Most Important:** No JS or front-end framework! 
 
 ### Conclusion
 This is definitely not a bad approach if you're building a site and maintaining it yourself.
