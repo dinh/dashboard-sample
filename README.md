@@ -3,9 +3,9 @@
 ### Intro and Inspiration
 
 There is an amazing amount of interactivity that can be achieved on a website without
-needing to use `javascript`. To demonstrate this idea, this repository runs the
+needing to use `JavaScript`. To demonstrate this idea, this repository runs the
 following [site](http://dashboard.zmaytechstack.com/) with almost no `js`.
-There were a couple goals in mind:
+There were a few goals in mind:
 
 1. Implement just a few of the features that are a part
    of [koyfin's](https://app.koyfin.com/) website without any `js` and in doing so
@@ -13,6 +13,10 @@ There were a couple goals in mind:
    front-end `js` library (e.g., `REACT`).
 2. Show a more robust example than is typically found, but that is also very simple
    and easy to follow.
+3. Minimal `JavaScript` Dependencies. Only three were needed:
+   1. [HTMX](https://htmx.org/)
+   2. [Plotly](https://plotly.com/python/)
+   3. [Tabulator](http://tabulator.info/)
 
 We will walk through a couple of the features but I'd encourage those interested
 to explore the code to get a better sense of what is going on.
