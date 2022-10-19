@@ -41,22 +41,22 @@ generates the buttons along the top of the chart.
 {% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
 
 {% macro build_header(endpoint, target) %}
-{% for button in button_labels %}
-<div class="trigger-button"
-     hx-post="{{ endpoint }}"
-     hx-trigger="click"
-     hx-indicator="#indicator"
-     hx-target="{{ target }}"
-     hx-vals='{"window": "{{ button }}"}'
-     id="{{ button }}">{{ button }}
-</div>
-{% endfor %}
+    {% for button in button_labels %}
+        <div class="trigger-button"
+             hx-post="{{ endpoint }}"
+             hx-trigger="click"
+             hx-indicator="#indicator"
+             hx-target="{{ target }}"
+             hx-vals='{"window": "{{ button }}"}'
+             id="{{ button }}">{{ button }}
+        </div>
+    {% endfor %}
 {% endmacro %}
 ```
 
 Then in the
 main [html](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/todays-market-grid.html)
-for the homepage, the endpoint that is specified is `/chart/cum_returns`. This sends a `POST` request to the server:
+for the homepage, the endpoint that is specified is `/chart/cum_returns`. 
 
 ```python
 @application.route('/chart/cum_returns', methods=['GET', 'POST'])
@@ -65,8 +65,9 @@ def chart_cumreturns():
     return view.get_daily_market_chart_html()
 ```
 
-which uses [Plotly](https://plotly.com/python/) to build charts in `Python`
-and generate html to replace the plot on the screen with an updated version.
+This sends a `POST` request to the server which uses 
+[Plotly](https://plotly.com/python/) to build charts in `Python` and generates
+html to replace the plot on the screen with an updated version.
 Just like that, with no `js`, we can generate a chart with similar functionality
 to that on [https://app.koyfin.com/](koyfin).
 
@@ -74,9 +75,9 @@ to that on [https://app.koyfin.com/](koyfin).
 
 ### Benefits
 
-There are a few benefits to generate the html on the server side:
+There are a few benefits to generating the html on the server side:
 
-1. Language consistency: Stay in the same language as the backend code (e.g., `Python` for this example)
+1. Language consistency: Stay in the same language as the backend code (e.g., `Python` used here)
 2. Rapid prototyping: Easier to get a bunch of visuals - think dashboards - up in less time
 3. **Most Important:** No JS or front-end framework!
 4. Much easier for all programmers to be full stack
@@ -89,15 +90,16 @@ of [hackernews](https://htmx.org/essays/a-real-world-react-to-htmx-port/) about 
 used for a large scale software product.
 
 ### Setup
-If you would like to run this locally, you will need to setup the following environemt 
+
+If you would like to run this locally, you will need to setup the following environemt
 variables:
+
 ```dotenv
-ASSETS_ROOT=/static/assets
 STOCK_API_KEY=
 DATA_BUCKET=
 ```
 
 1. The API can be retrieved [here](https://www.alphavantage.co/support/#api-key)
 2. The data bucket must be setup on S3 with AWS. This is used as a cheap cache to
-store parquet files of data previously requested since we didn't feel like storing data
-in a DB.
+   store parquet files of data previously requested since we didn't feel like storing data
+   in a DB.
