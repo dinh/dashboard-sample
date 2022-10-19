@@ -76,7 +76,7 @@ def chart_cumreturns():
     return view.get_daily_market_chart_html()
 ```
 
-This uses endpoint uses [Plotly](https://plotly.com/python/) to build charts in
+This endpoint uses [Plotly](https://plotly.com/python/) to build charts in
 `Python` and generates html to replace the plot on the screen with an updated version.
 Just like that, with no `js`, we can generate a chart with similar functionality
 to that on [https://app.koyfin.com/](koyfin).
