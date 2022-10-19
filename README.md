@@ -90,6 +90,10 @@ There are a few benefits to generating the html on the server side:
 
 ### Conclusion
 
+Mission accomplished!
+
+![Languages](.images/github-languages.jpg)
+
 This is not a bad approach if you're building a site and maintaining it yourself.
 In fact, this isn't a bad approach for software at scale. Here is a post that recently showed up at the top
 of [hackernews](https://htmx.org/essays/a-real-world-react-to-htmx-port/) about HTMX being
