@@ -14,9 +14,9 @@ There were a few goals in mind:
 2. Show a more robust example than is typically found, but that is also very simple
    and easy to follow.
 3. Minimal `JavaScript` Dependencies. Only three were needed:
-   1. [HTMX](https://htmx.org/)
-   2. [Plotly](https://plotly.com/python/)
-   3. [Tabulator](http://tabulator.info/)
+    1. [HTMX](https://htmx.org/)
+    2. [Plotly](https://plotly.com/python/)
+    3. [Tabulator](http://tabulator.info/)
 
 We will walk through a couple of the features but I'd encourage those interested
 to explore the code to get a better sense of what is going on.
@@ -44,9 +44,10 @@ server-side requests directly in the html: `<a hx-post="/click">Click Me!</a>`.
 ### An Example
 
 The way the site uses this package can be shown with the cumulative return chart on the
-landing page.The
-following [code](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/macros.html)
-generates the buttons along the top of the chart.
+landing page. What we are going to demonstrate is that using htmx, we generate routes that
+act as components on the page and not page reload routes (i.e., we are only replacing
+certain sections of the DOM, not the entire DOM). We first generate a post request with
+the following [code](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/macros.html).
 
 ```html
 {% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
@@ -54,20 +55,28 @@ generates the buttons along the top of the chart.
 {% macro build_header(endpoint, target) %}
 {% for button in button_labels %}
 <div class="trigger-button"
-     hx-post="{{ endpoint }}"
+     hx-post="/chart/cum_returns"
      hx-trigger="click"
-     hx-indicator="#indicator"
-     hx-target="{{ target }}"
-     hx-vals='{"window": "{{ button }}"}'
+     hx-target="#market-chart"
+     hx-vals='{"window": "L10Y"}'
      id="{{ button }}">{{ button }}
 </div>
 {% endfor %}
 {% endmacro %}
-```
+``` 
 
-Then in the
-main [html](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/todays-market-grid.html)
-for the homepage, the endpoint that is specified is `/chart/cum_returns` and it sends a `POST` request here:
+Lets quickly explain each of the `hx-` attributes:
+
+1. `hx-post`: This will be a post request to the `/chart/cum_returns` endpoint.
+2. `hx-trigger`: determines that the post request will occur on a click event
+3. `hx-target`: determines where to put the response of the post request. Since the
+   endpoint sends back html, it will put the html inside the following div:
+   `<div id="market-chart" class="container">`
+4. `hx-vals`: `json` data to send to the server as part of the request. Here it would
+   send the value `L10Y` to the plot endpoint to determine the length of the
+   cumulative returns plot.
+
+The `/chart/cum_returns` endpoint is as simple as below:
 
 ```python
 @application.route('/chart/cum_returns', methods=['GET', 'POST'])
@@ -76,8 +85,13 @@ def chart_cumreturns():
     return view.get_daily_market_chart_html()
 ```
 
-This uses endpoint uses [Plotly](https://plotly.com/python/) to build charts in
-`Python` and generates html to replace the plot on the screen with an updated version.
+All we are doing is using [Plotly](https://plotly.com/python/) and some
+templating around `express.line(data)` to build charts in `Python` with certain
+request paramaters to generate html to replace the plot on the screen with an updated version,
+but without needing to do a full page reload.
+
+![Koyfin](.images/component.gif)
+
 Just like that, with no `js`, we can generate a chart with similar functionality
 to that on [https://app.koyfin.com/](koyfin).
 
@@ -87,10 +101,11 @@ to that on [https://app.koyfin.com/](koyfin).
 
 There are a few benefits to generating the html on the server side:
 
-1. Language consistency: Stay in the same language as the backend code (e.g., `Python` used here)
-2. Rapid prototyping: Easier to get a bunch of visuals - think dashboards - up in less time
-3. Easier for all programmers to be full stack
-4. **Most Important:** No JS or front-end framework!
+1. No full page reloads
+2. Language consistency: Stay in the same language as the backend code (e.g., `Python` used here)
+3. Rapid prototyping: Easier to get a bunch of visuals - think dashboards - up in less time
+4. Easier for all programmers to be full stack
+5. **Most Important:** No JS or front-end framework!
 
 ### Conclusion
 

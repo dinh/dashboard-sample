@@ -1,5 +1,3 @@
-from functools import lru_cache
-
 import pandas as pd
 
 from apps.services import stats, window
@@ -16,7 +14,6 @@ class MarketView(_ViewMixin):
     def av(self):
         return self.data_service.av
 
-    @lru_cache(500)
     def get_market_data(self, column='close'):
         df = self.data_service.get_market_stock_series()
         df = pd.concat([df.loc[df.symbol == symbol, [column]] for symbol in self.data_service.urls.DEFAULT_INDICES],
