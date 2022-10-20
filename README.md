@@ -141,6 +141,6 @@ environment, `pip install -r requirements.txt` and be good to go.
 
 1. Htmx
 2. Flask
-3. CSS: Mostly Grid and FLex
+3. CSS: Mostly Grid and Flex
 4. Alpha Vantage API
 5. AWS S3 and Elastic Beanstalk
