@@ -7,18 +7,17 @@ needing to use `JavaScript`. To demonstrate this idea, this repository runs the
 following [site](http://dashboard.zmaytechstack.com/) with almost no `js`.
 There were a few goals in mind:
 
-1. Implement just a few of the features that are a part
-   of [koyfin's](https://app.koyfin.com/) website without any `js` and in doing so
-   show that you can get a lot of the same feel and functionality as a site using a
-   front-end `js` library (e.g., `REACT`).
-2. Show a more robust example than is typically found, but that is also very simple
+1. Implement just a few of the features that are a part of [koyfin's](https://app.koyfin.com/) website without any `js`
+   and in doing so show that you can get a lot of the same feel and functionality as a site using a
+   front-end framework (e.g., `REACT`).
+2. Show a more decently robust example, but that is also very simple
    and easy to follow.
 3. Minimal `JavaScript` Dependencies. Only three were needed:
     1. [HTMX](https://htmx.org/)
     2. [Plotly](https://plotly.com/python/)
     3. [Tabulator](http://tabulator.info/)
 
-We will walk through a couple of the features but I'd encourage those interested
+We will walk through a couple of the features, but I'd encourage those interested
 to explore the code to get a better sense of what is going on.
 Setup instructions are provided in the appendix.
 
@@ -29,7 +28,7 @@ I do my best to cache results in S3, but only so much can be done.*
 The site has the following functionality without javascript:
 
 1. Updating the chart based on timeframe selection.
-2. Search bar to search for US listed securities.
+2. Search bar to find US listed securities.
 3. Polling to update the news feed every 5 minutes.
 
 All can be seen on the homepage:
@@ -39,7 +38,7 @@ All can be seen on the homepage:
 None of these features use `javascript` (although the table does rely on the `javascript` package Tabulator).
 To generate server-side requests, we use the [htmx](https://htmx.org/) package.
 Instead of sending json between the server and the browser, you send html and make
-server-side requests directly in the html: `<a hx-post="/click">Click Me!</a>`.
+server-side requests directly in the html, such as: `<a hx-post="/click">Click Me!</a>`.
 
 ### An Example
 
@@ -65,7 +64,7 @@ the following [code](https://github.com/azakmay/dashboard-sample/blob/master/app
 {% endmacro %}
 ``` 
 
-Lets quickly explain each of the `hx-` attributes:
+Let's quickly explain each of the `hx-` attributes:
 
 1. `hx-post`: This will be a post request to the `/chart/cum_returns` endpoint.
 2. `hx-trigger`: determines that the post request will occur on a click event
@@ -87,8 +86,8 @@ def chart_cumreturns():
 
 All we are doing is using [Plotly](https://plotly.com/python/) and some
 templating around `express.line(data)` to build charts in `Python` with certain
-request paramaters to generate html to replace the plot on the screen with an updated version,
-but without needing to do a full page reload.
+request paramaters. This generates html to replace the plot on the screen with an updated 
+version without needing to do a full page reload.
 
 ![Koyfin](.images/component.gif)
 
@@ -99,7 +98,7 @@ to that on [https://app.koyfin.com/](koyfin).
 
 ### Benefits
 
-There are a few benefits to generating the html on the server side:
+There are a few benefits to generating the html on the server side with htmx:
 
 1. No full page reloads
 2. Language consistency: Stay in the same language as the backend code (e.g., `Python` used here)
