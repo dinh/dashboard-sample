@@ -3,29 +3,29 @@
 ### Intro and Inspiration
 
 There is an amazing amount of interactivity that can be achieved on a website without
-needing to use `JavaScript`. To demonstrate this idea, this repository runs the
+using `JavaScript`. To demonstrate this idea, this repository runs the
 following [site](http://dashboard.zmaytechstack.com/) with almost no `js`.
-There were a few goals in mind:
+There were a few goals in mind when trying to build the site without `js`:
 
-1. Implement just a few of the features that are a part of [koyfin's](https://app.koyfin.com/) website without any `js`
+1. Implement a few of the features that are a part of [koyfin's](https://app.koyfin.com/) website
    and in doing so show that you can get a lot of the same feel and functionality as a site using a
    front-end framework (e.g., `REACT`).
-2. Show a more decently robust example, but that is also very simple
+2. Show a decently robust example, but that is also very simple
    and easy to follow.
-3. Minimal `JavaScript` Dependencies. Only three were needed:
+3. Minimal `JavaScript` dependencies. Only three were used:
     1. [HTMX](https://htmx.org/)
     2. [Plotly](https://plotly.com/python/)
     3. [Tabulator](http://tabulator.info/)
 
-We will walk through a couple of the features, but I'd encourage those interested
-to explore the code to get a better sense of what is going on.
+We will walk through a couple of the features, but I'd encourage exploring
+the code to get a better sense of what is going on.
 Setup instructions are provided in the appendix.
 
 **Full Disclosure:** *I am using the [Alpha Vantage](https://www.alphavantage.co/) free API
 and only have 5 API hits per minute, so you can imagine that the site does not scale well!
 I do my best to cache results in S3, but only so much can be done.*
 
-The site has the following functionality without javascript:
+The site has the following functionality without `JavaScript`:
 
 1. Updating the chart based on timeframe selection.
 2. Search bar to find US listed securities.
@@ -35,18 +35,19 @@ All can be seen on the homepage:
 
 ![Homepage](.images/homepage.jpg)
 
-None of these features use `javascript` (although the table does rely on the `javascript` package Tabulator).
-To generate server-side requests, we use the [htmx](https://htmx.org/) package.
-Instead of sending json between the server and the browser, you send html and make
-server-side requests directly in the html, such as: `<a hx-post="/click">Click Me!</a>`.
+None of these features use `js` (although the table does rely on the `JavaScript`
+package Tabulator). To generate server-side requests, we use the
+[htmx](https://htmx.org/) package. Instead of sending json between the server and
+the browser, you send html and make server-side requests directly in the
+html, such as: `<a hx-post="/click">Click Me!</a>`.
 
 ### An Example
 
 The way the site uses this package can be shown with the cumulative return chart on the
-landing page. What we are going to demonstrate is that using htmx, we generate routes that
-act as components on the page and not page reload routes (i.e., we are only replacing
-certain sections of the DOM, not the entire DOM). We first generate a post request with
-the following [code](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/macros.html).
+landing page. Using htmx, we generate requests that replace specific elements of a page 
+and not full page reloads (i.e., we are only replacing certain sections of the DOM,
+not the entire DOM). We first generate a post request with the
+following [code](https://github.com/azakmay/dashboard-sample/blob/master/apps/templates/home/macros.html).
 
 ```html
 {% set button_labels = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y'] %}
@@ -64,7 +65,7 @@ the following [code](https://github.com/azakmay/dashboard-sample/blob/master/app
 {% endmacro %}
 ``` 
 
-Let's quickly explain each of the `hx-` attributes:
+Let's quickly explain each of the `hx-` attributes shown:
 
 1. `hx-post`: This will be a post request to the `/chart/cum_returns` endpoint.
 2. `hx-trigger`: determines that the post request will occur on a click event
@@ -75,7 +76,7 @@ Let's quickly explain each of the `hx-` attributes:
    send the value `L10Y` to the plot endpoint to determine the length of the
    cumulative returns plot.
 
-The `/chart/cum_returns` endpoint is as simple as below:
+The `/chart/cum_returns` endpoint is very simple:
 
 ```python
 @application.route('/chart/cum_returns', methods=['GET', 'POST'])
@@ -86,8 +87,8 @@ def chart_cumreturns():
 
 All we are doing is using [Plotly](https://plotly.com/python/) and some
 templating around `express.line(data)` to build charts in `Python` with certain
-request paramaters. This generates html to replace the plot on the screen with an updated 
-version without needing to do a full page reload.
+request parameters. This generates html to replace the plot at the specified `market-chart`
+div without needing to do a full page reload. This can be seen in the fig below:
 
 ![Koyfin](.images/component.gif)
 
@@ -100,7 +101,7 @@ to that on [https://app.koyfin.com/](koyfin).
 
 There are a few benefits to generating the html on the server side with htmx:
 
-1. No full page reloads
+1. No full page reloads makes for a pleasant UX experience
 2. Language consistency: Stay in the same language as the backend code (e.g., `Python` used here)
 3. Rapid prototyping: Easier to get a bunch of visuals - think dashboards - up in less time
 4. Easier for all programmers to be full stack
