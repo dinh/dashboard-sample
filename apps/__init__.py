@@ -8,7 +8,7 @@ def get_404(e):
 
 
 def get_500(e):
-    return render_template("errors/404.html"), 500
+    return render_template("errors/500.html"), 500
 
 
 application = Flask(__name__)
