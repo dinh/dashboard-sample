@@ -93,7 +93,7 @@ div without needing to do a full page reload. This can be seen in the fig below:
 ![Koyfin](.images/component.gif)
 
 Just like that, with no `js`, we can generate a chart with similar functionality
-to that on [https://app.koyfin.com/](koyfin).
+to that on [koyfin](https://app.koyfin.com/).
 
 ![Koyfin](.images/koyfin.jpg)
 
