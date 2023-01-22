@@ -24,8 +24,8 @@ class AlphaVantageUrls:
     DEFAULT_INDICES = ['QQQ', 'SPY', 'IWM']
 
     def __init__(self, key=None, bucket=None):
-        self.api_key = key if key else os.getenv('STOCK_API_KEY')
-        self.bucket = bucket if bucket else os.getenv('DATA_BUCKET')
+        self.api_key = key or os.getenv('STOCK_API_KEY')
+        self.bucket = bucket or os.getenv('DATA_BUCKET')
         self._base_api_url = "https://www.alphavantage.co/query?"
         self._bucket_url = "s3://{bucket}/{function}/{symbol}"
 

@@ -29,21 +29,18 @@ class DataSvc:
 
     def get_daily_stock_series(self, symbol):
         s3_key = self.urls.get_daily_stock_series_url_s3(symbol)
-        if self.s3.does_object_exist(s3_key):
-            # Timezone really should be a system setting, but leaving here
-            today = pd.Timestamp.utcnow().date()
-            last_modified = self.get_last_modified(s3_key)
-            if today == last_modified:
-                logger.info(f"loading from s3: {s3_key}")
-                df = self.s3.read_parquet(s3_key)
-                return df
-            else:
-                return self.get_daily_stock_data_from_api(s3_key, symbol)[0]
-        else:
+        if not self.s3.does_object_exist(s3_key):
             return self.get_daily_stock_data_from_api(s3_key, symbol)[0]
+        # Timezone really should be a system setting, but leaving here
+        today = pd.Timestamp.utcnow().date()
+        last_modified = self.get_last_modified(s3_key)
+        if today != last_modified:
+            return self.get_daily_stock_data_from_api(s3_key, symbol)[0]
+        logger.info(f"loading from s3: {s3_key}")
+        return self.s3.read_parquet(s3_key)
 
     def get_market_data_from_api(self):
-        logger.info(f"loading from api: Market Data")
+        logger.info("loading from api: Market Data")
         s3_key = self.urls.get_market_stock_url_s3()
         dfs = []
         for symbol in self.urls.DEFAULT_INDICES:
@@ -64,8 +61,7 @@ class DataSvc:
             last_modified = self.get_last_modified(s3_key)
             if today == last_modified:
                 logger.info(f"loading from s3: {s3_key}")
-                df = self.s3.read_parquet(s3_key, columns=columns)
-                return df
+                return self.s3.read_parquet(s3_key, columns=columns)
             else:
                 df = self.get_market_data_from_api()
                 return df.loc[:, columns[1:]]

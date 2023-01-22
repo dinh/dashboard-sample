@@ -35,8 +35,7 @@ class MarketView(_ViewMixin):
         df = self.get_market_data()
         df = stats.calc_cum_returns(df)
         df = self._prepare_for_plot(df)
-        fig = plot_prices(df, "Today's Market").update_layout(yaxis_tickformat='%')
-        return fig
+        return plot_prices(df, "Today's Market").update_layout(yaxis_tickformat='%')
 
     def get_daily_market_chart_html(self, div_id='market-chart'):
         fig = self.build_market_chart()
@@ -47,8 +46,7 @@ class MarketView(_ViewMixin):
         df = stats.calc_cum_returns(df)
         df = stats.calc_drawdown(df)
         df = self._prepare_for_plot(df)
-        fig = plot_prices(df, "Drawdown").update_layout(yaxis_tickformat='%')
-        return fig
+        return plot_prices(df, "Drawdown").update_layout(yaxis_tickformat='%')
 
     def get_drawdown_chart_html(self, div_id='market-drawdown'):
         fig = self.build_drawdown_chart()

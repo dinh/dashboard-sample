@@ -22,8 +22,7 @@ def _write_html(fig, div_id=None):
                    div_id=div_id,
                    config=config)
     buffer.seek(0)
-    html_str = buffer.read()
-    return html_str
+    return buffer.read()
 
 
 def plot_prices(df, title):
