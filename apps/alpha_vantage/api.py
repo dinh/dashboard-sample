@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class AlphaVantage:
 
     def __init__(self, key=None, bucket=None):
-        self.api_key = key if key else os.getenv('STOCK_API_KEY')
+        self.api_key = key or os.getenv('STOCK_API_KEY')
         self.urls = AlphaVantageUrls(key=key, bucket=bucket)
 
     @staticmethod

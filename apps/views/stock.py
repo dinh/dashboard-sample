@@ -30,8 +30,7 @@ class StockView(_ViewMixin):
             df = df.loc[df.index >= start_date, :]
         df = df.loc[:, ['close']]
         df = self._prepare_for_plot(df)
-        fig = plot_prices(df, f'{self.symbol} Price')
-        return fig
+        return plot_prices(df, f'{self.symbol} Price')
 
     def get_daily_stock_chart_html(self):
         fig = self.build_daily_stock_chart()
